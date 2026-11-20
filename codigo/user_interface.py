@@ -78,7 +78,10 @@ while opcion != "7":
                 minimo = hotel_objeto.convertir_habitaciones_ocupadas(input("Habitaciones ocupadas mínimas: "))
                 maximo = hotel_objeto.convertir_habitaciones_ocupadas(input("Habitaciones ocupadas máximas: "))
                 hotel_objeto.simular_dias(numero_de_dias, minimo, maximo)
-                print(f"Se simularon {numero_de_dias} días en {hotel_objeto.nombre}")
+                if numero_de_dias == 1:
+                    print(f"Se simuló 1 día en {hotel_objeto.nombre}")
+                else:
+                    print(f"Se simularon {numero_de_dias} días en {hotel_objeto.nombre}")
             except ValueError as error:
                 print(error)
 
@@ -132,7 +135,10 @@ while opcion != "7":
                 else:
                     dias_de_racha = hotel_objeto.contar_racha_critica_desde(inicio_racha)
                     fecha_inicio_racha = hotel_objeto.calcular_fecha_del_dia(inicio_racha)
-                    print(f"Racha más larga en ocupación crítica: {dias_de_racha} días, desde el {fecha_inicio_racha}")
+                    if dias_de_racha == 1:
+                        print(f"Racha más larga en ocupación crítica: 1 día, el {fecha_inicio_racha}")
+                    else:
+                        print(f"Racha más larga en ocupación crítica: {dias_de_racha} días, desde el {fecha_inicio_racha}")
 
                 # Requisito 9
                 fecha_actual = date.today()

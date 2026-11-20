@@ -69,6 +69,8 @@ class Hotel:
         dias_disponibles = self.calcular_dias_disponibles()
         if dias_disponibles == 0:
             raise ValueError(f"El registro del hotel ya llegó a la fecha máxima, {FECHA_MAXIMA}")
+        if numero_de_dias > dias_disponibles and dias_disponibles == 1:
+            raise ValueError(f"Solo queda 1 día por registrar hasta el {FECHA_MAXIMA}")
         if numero_de_dias > dias_disponibles:
             raise ValueError(f"Solo quedan {dias_disponibles} días por registrar hasta el {FECHA_MAXIMA}")
 
