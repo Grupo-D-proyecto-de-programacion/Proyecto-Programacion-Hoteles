@@ -1,7 +1,7 @@
 from datetime import date
 from os import system
 
-from business_logic import NIVEL_ALTA, NIVEL_BAJA, NIVEL_CRITICA, NIVEL_MEDIA, CadenaHotelera
+from business_logic import FECHA_MAXIMA, NIVEL_ALTA, NIVEL_BAJA, NIVEL_CRITICA, NIVEL_MEDIA, CadenaHotelera
 
 # Requisito 14
 system("cls")
@@ -50,16 +50,19 @@ while opcion != "7":
         else:
             # Requisito 2
             fecha_dia_siguiente = hotel_objeto.calcular_fecha_dia_siguiente()
-            ocupadas_guardadas = False
-            while not ocupadas_guardadas:
-                try:
-                    ocupadas_texto = input(f"Habitaciones ocupadas del {fecha_dia_siguiente}: ")
-                    ocupadas = hotel_objeto.convertir_habitaciones_ocupadas(ocupadas_texto)
-                    hotel_objeto.registrar_dia(ocupadas)
-                    ocupadas_guardadas = True
-                except ValueError as error:
-                    print(error)
-            print(f"Se registró el día {fecha_dia_siguiente}")
+            if fecha_dia_siguiente is None:
+                print(f"El registro del hotel ya llegó a la fecha máxima, {FECHA_MAXIMA}")
+            else:
+                ocupadas_guardadas = False
+                while not ocupadas_guardadas:
+                    try:
+                        ocupadas_texto = input(f"Habitaciones ocupadas del {fecha_dia_siguiente}: ")
+                        ocupadas = hotel_objeto.convertir_habitaciones_ocupadas(ocupadas_texto)
+                        hotel_objeto.registrar_dia(ocupadas)
+                        ocupadas_guardadas = True
+                    except ValueError as error:
+                        print(error)
+                print(f"Se registró el día {fecha_dia_siguiente}")
 
     # Requisito 3
     elif opcion == "3":

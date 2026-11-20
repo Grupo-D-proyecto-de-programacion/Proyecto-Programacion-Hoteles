@@ -17,6 +17,9 @@ MESES_POR_AÑO = 12
 AÑO_MINIMO = 1
 AÑO_MAXIMO = 9999
 
+# Requisitos 2, 3, 9 y 13
+FECHA_MAXIMA = date(AÑO_MAXIMO, MESES_POR_AÑO, 31)
+
 # Requisitos 12 y 13
 CAMPOS_LINEA_HOTEL = 5
 CAMPOS_LINEA_OCUPACION = 2
@@ -41,9 +44,33 @@ class Hotel:
         return fecha
 
     # Requisitos 2 y 9
-    def calcular_fecha_dia_siguiente(self) -> date:
-        fecha_dia_siguiente = self.calcular_fecha_del_dia(len(self.habitaciones_ocupadas))
+    def calcular_fecha_dia_siguiente(self) -> date | None:
+        fecha_ultimo_dia = self.calcular_fecha_ultimo_dia()
+        if fecha_ultimo_dia is None:
+            fecha_dia_siguiente = self.fecha_inicio
+        elif fecha_ultimo_dia == FECHA_MAXIMA:
+            fecha_dia_siguiente = None
+        else:
+            fecha_dia_siguiente = calcular_dia_siguiente(fecha_ultimo_dia)
         return fecha_dia_siguiente
+
+    # Requisitos 2, 3 y 13
+    def calcular_dias_disponibles(self) -> int:
+        fecha_dia_siguiente = self.calcular_fecha_dia_siguiente()
+        if fecha_dia_siguiente is None:
+            dias_disponibles = 0
+        else:
+            tiempo_disponible = FECHA_MAXIMA - fecha_dia_siguiente
+            dias_disponibles = tiempo_disponible.days + 1
+        return dias_disponibles
+
+    # Requisitos 2, 3 y 13
+    def revisar_dias_disponibles(self, numero_de_dias: int):
+        dias_disponibles = self.calcular_dias_disponibles()
+        if dias_disponibles == 0:
+            raise ValueError(f"El registro del hotel ya llegó a la fecha máxima, {FECHA_MAXIMA}")
+        if numero_de_dias > dias_disponibles:
+            raise ValueError(f"Solo quedan {dias_disponibles} días por registrar hasta el {FECHA_MAXIMA}")
 
     # Requisitos 2, 3 y 13
     def revisar_rango_ocupadas(self, ocupadas: int):
@@ -60,6 +87,7 @@ class Hotel:
 
     # Requisitos 2, 3 y 13
     def registrar_dia(self, ocupadas: int):
+        self.revisar_dias_disponibles(1)
         self.revisar_rango_ocupadas(ocupadas)
         self.habitaciones_ocupadas.append(ocupadas)
 
@@ -70,16 +98,18 @@ class Hotel:
         numero_de_dias = int(dias_texto)
         if numero_de_dias < 1:
             raise ValueError("Se debe simular al menos un día")
+        self.revisar_dias_disponibles(numero_de_dias)
         return numero_de_dias
 
     # Requisito 3
     def simular_dias(self, numero_de_dias: int, minimo: int, maximo: int):
+        self.revisar_dias_disponibles(numero_de_dias)
         self.revisar_rango_ocupadas(minimo)
         self.revisar_rango_ocupadas(maximo)
         if minimo > maximo:
             raise ValueError("El mínimo no puede ser mayor que el máximo")
         for _ in range(numero_de_dias):
-            self.registrar_dia(randint(minimo, maximo))
+            self.habitaciones_ocupadas.append(randint(minimo, maximo))
 
     # Requisito 4
     def calcular_dias_registrados(self) -> int:
@@ -202,10 +232,14 @@ class Hotel:
 
     # Requisito 9
     def calcular_dias_sin_registrar(self, fecha_actual: date) -> int:
-        tiempo_sin_registrar = fecha_actual - self.calcular_fecha_dia_siguiente()
-        dias_sin_registrar = tiempo_sin_registrar.days
-        if dias_sin_registrar < 0:
+        fecha_dia_siguiente = self.calcular_fecha_dia_siguiente()
+        if fecha_dia_siguiente is None:
             dias_sin_registrar = 0
+        else:
+            tiempo_sin_registrar = fecha_actual - fecha_dia_siguiente
+            dias_sin_registrar = tiempo_sin_registrar.days
+            if dias_sin_registrar < 0:
+                dias_sin_registrar = 0
         return dias_sin_registrar
 
 
