@@ -177,12 +177,12 @@ class Hotel:
 
     # Requisito 7
     def clasificar_ocupacion(self, ocupadas: int) -> str:
-        ocupadas_por_cien = ocupadas * 100
-        if ocupadas_por_cien < PORCENTAJE_MINIMO_BAJA * self.habitaciones_habilitadas:
+        porcentaje_del_dia = ocupadas / self.habitaciones_habilitadas * 100
+        if porcentaje_del_dia < PORCENTAJE_MINIMO_BAJA:
             nivel = NIVEL_CRITICA
-        elif ocupadas_por_cien < PORCENTAJE_MINIMO_MEDIA * self.habitaciones_habilitadas:
+        elif porcentaje_del_dia < PORCENTAJE_MINIMO_MEDIA:
             nivel = NIVEL_BAJA
-        elif ocupadas_por_cien < PORCENTAJE_MINIMO_ALTA * self.habitaciones_habilitadas:
+        elif porcentaje_del_dia < PORCENTAJE_MINIMO_ALTA:
             nivel = NIVEL_MEDIA
         else:
             nivel = NIVEL_ALTA
