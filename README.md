@@ -4,7 +4,7 @@ Trabajo de fin de curso de Fundamentos de Programación, Universidad del Magdale
 
 ## Video explicativo
 
-**[Ver el video en YouTube](https://youtu.be/8I4WHkwWjZw)**
+**[Ver el video en YouTube](https://www.youtube.com/watch?v=Ynen0HQkR9k)**
 
 https://youtu.be/8I4WHkwWjZw
 
