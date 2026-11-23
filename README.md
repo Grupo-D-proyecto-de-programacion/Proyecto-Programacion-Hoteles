@@ -17,7 +17,7 @@ https://youtu.be/8I4WHkwWjZw
 | Informe del uso de la inteligencia artificial generativa | [Informe_uso_de_IA_Sol_Caribe.pdf](Informe_uso_de_IA_Sol_Caribe.pdf) |
 | Código fuente | [codigo/business_logic.py](codigo/business_logic.py) y [codigo/user_interface.py](codigo/user_interface.py) |
 | Archivos de datos de ejemplo | [codigo/datos/](codigo/datos/) |
-| Video explicativo | [youtu.be/8I4WHkwWjZw](https://youtu.be/8I4WHkwWjZw) |
+| Video explicativo | [youtu.be/8I4WHkwWjZw](https://www.youtube.com/watch?v=Ynen0HQkR9k) |
 
 ## Cómo ejecutar el programa
 
