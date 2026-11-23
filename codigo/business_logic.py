@@ -13,12 +13,12 @@ PORCENTAJE_MINIMO_MEDIA = 60
 PORCENTAJE_MINIMO_ALTA = 80
 
 # Requisitos 1 y 2
-MESES_POR_AÑO = 12
-AÑO_MINIMO = 1
-AÑO_MAXIMO = 9999
+MESES_POR_ANIO = 12
+ANIO_MINIMO = 1
+ANIO_MAXIMO = 9999
 
 # Requisitos 2, 3, 9 y 13
-FECHA_MAXIMA = date(AÑO_MAXIMO, MESES_POR_AÑO, 31)
+FECHA_MAXIMA = date(ANIO_MAXIMO, MESES_POR_ANIO, 31)
 
 # Requisitos 12 y 13
 CAMPOS_LINEA_HOTEL = 5
@@ -276,7 +276,7 @@ class CadenaHotelera:
     def crear_hotel(self,
                     nombre: str,
                     habitaciones_texto: str,
-                    año_texto: str,
+                    anio_texto: str,
                     mes_texto: str,
                     dia_texto: str) -> Hotel:
         nombre = nombre.strip()
@@ -289,9 +289,9 @@ class CadenaHotelera:
         habitaciones_habilitadas = int(habitaciones_texto)
         if habitaciones_habilitadas < 1:
             raise ValueError("El hotel debe tener al menos una habitación habilitada")
-        if not es_fecha_valida(año_texto, mes_texto, dia_texto):
+        if not es_fecha_valida(anio_texto, mes_texto, dia_texto):
             raise ValueError("La fecha no es válida")
-        fecha_inicio = date(int(año_texto), int(mes_texto), int(dia_texto))
+        fecha_inicio = date(int(anio_texto), int(mes_texto), int(dia_texto))
         hotel = Hotel(nombre, habitaciones_habilitadas, fecha_inicio)
         self.hoteles.append(hotel)
         return hotel
@@ -353,15 +353,15 @@ def es_entero(texto: str) -> bool:
 
 
 # Requisitos 1 y 2
-def es_bisiesto(año: int) -> bool:
-    bisiesto = año % 4 == 0 and (año % 100 != 0 or año % 400 == 0)
+def es_bisiesto(anio: int) -> bool:
+    bisiesto = anio % 4 == 0 and (anio % 100 != 0 or anio % 400 == 0)
     return bisiesto
 
 
 # Requisitos 1 y 2
-def calcular_dias_del_mes(año: int, mes: int) -> int:
+def calcular_dias_del_mes(anio: int, mes: int) -> int:
     if mes == 2:
-        if es_bisiesto(año):
+        if es_bisiesto(anio):
             dias_del_mes = 29
         else:
             dias_del_mes = 28
@@ -373,18 +373,18 @@ def calcular_dias_del_mes(año: int, mes: int) -> int:
 
 
 # Requisito 1
-def es_fecha_valida(año_texto: str, mes_texto: str, dia_texto: str) -> bool:
-    if not es_entero(año_texto) or not es_entero(mes_texto) or not es_entero(dia_texto):
+def es_fecha_valida(anio_texto: str, mes_texto: str, dia_texto: str) -> bool:
+    if not es_entero(anio_texto) or not es_entero(mes_texto) or not es_entero(dia_texto):
         valida = False
     else:
-        año = int(año_texto)
+        anio = int(anio_texto)
         mes = int(mes_texto)
         dia = int(dia_texto)
-        if año < AÑO_MINIMO or año > AÑO_MAXIMO:
+        if anio < ANIO_MINIMO or anio > ANIO_MAXIMO:
             valida = False
-        elif mes < 1 or mes > MESES_POR_AÑO:
+        elif mes < 1 or mes > MESES_POR_ANIO:
             valida = False
-        elif dia < 1 or dia > calcular_dias_del_mes(año, mes):
+        elif dia < 1 or dia > calcular_dias_del_mes(anio, mes):
             valida = False
         else:
             valida = True
@@ -393,14 +393,14 @@ def es_fecha_valida(año_texto: str, mes_texto: str, dia_texto: str) -> bool:
 
 # Requisito 2
 def calcular_dia_siguiente(fecha: date) -> date:
-    año = fecha.year
+    anio = fecha.year
     mes = fecha.month
     dia = fecha.day + 1
-    if dia > calcular_dias_del_mes(año, mes):
+    if dia > calcular_dias_del_mes(anio, mes):
         dia = 1
         mes = mes + 1
-        if mes > MESES_POR_AÑO:
+        if mes > MESES_POR_ANIO:
             mes = 1
-            año = año + 1
-    dia_siguiente = date(año, mes, dia)
+            anio = anio + 1
+    dia_siguiente = date(anio, mes, dia)
     return dia_siguiente

@@ -31,11 +31,11 @@ while opcion != "7":
     if opcion == "1":
         nombre = input("Nombre del hotel: ")
         habitaciones_texto = input("Habitaciones habilitadas: ")
-        año_texto = input("Año de la fecha de inicio: ")
+        anio_texto = input("Año de la fecha de inicio: ")
         mes_texto = input("Mes de la fecha de inicio: ")
         dia_texto = input("Día de la fecha de inicio: ")
         try:
-            hotel_objeto = cadena_objeto.crear_hotel(nombre, habitaciones_texto, año_texto, mes_texto, dia_texto)
+            hotel_objeto = cadena_objeto.crear_hotel(nombre, habitaciones_texto, anio_texto, mes_texto, dia_texto)
             print(f"Se creó el hotel {hotel_objeto.nombre}, sin días registrados")
         except ValueError as error:
             print(error)
